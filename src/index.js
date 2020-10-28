@@ -20,18 +20,28 @@ const Book = ({title,author,pages}) => {
     )
 }
 
-const Library = ({books}) => {
-    return(
-        <div>
-            {books.map(
-                (book,i) => <Book
-                    key={i}
-                    title={book.title}
-                    author={book.author}
-                    pages={book.pages}/>
-            )}
-        </div>
-    )
+class Library extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            
+        }
+    }
+    render(){
+        const { books } = this.props;
+        return(
+            <div>
+                {books.map(
+                    (book,i) => <Book
+                        key={i}
+                        title={book.title}
+                        author={book.author}
+                        pages={book.pages}/>
+                )}
+            </div>
+        )
+    }
+
 }
 render(
     <Library books={bookList}/>,
