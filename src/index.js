@@ -8,21 +8,21 @@ let skiData = {
     goal: 100
 }
 
-//functional component
-const SkiDataCounter = (props) => {
+//functional component with all the prop fields passed
+const SkiDataCounter = ({total,powder,backCountry,goal}) => {
     return (
         <section>
             <div>
-                <p>Total days: {props.total}</p>
+                <p>Total days: {total}</p>
             </div>
             <div>
-                <p>Powder days: {props.powder}</p>
+                <p>Powder days: {powder}</p>
             </div>
             <div>
-                <p>Back Country days: {props.backCountry}</p>
+                <p>Back Country days: {backCountry}</p>
             </div>
             <div>
-                <p>Goals: {props.goal}</p>
+                <p>Goals: {goal}</p>
             </div>
         </section>
     )
