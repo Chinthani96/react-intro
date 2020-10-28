@@ -8,6 +8,13 @@ let skiData = {
     goal: 100
 }
 
+const getPercent = decimal => {
+    return decimal * 100 + '%';
+}
+const calcGoalProgress = (total,goal) => {
+    return getPercent(total/goal);
+}
+
 //functional component with all the prop fields passed
 const SkiDataCounter = ({total,powder,backCountry,goal}) => {
     return (
@@ -23,6 +30,8 @@ const SkiDataCounter = ({total,powder,backCountry,goal}) => {
             </div>
             <div>
                 <p>Goals: {goal}</p>
+            </div><div>
+                <p>Goal progress: {calcGoalProgress(total,goal)}</p>
             </div>
         </section>
     )
