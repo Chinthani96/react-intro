@@ -24,13 +24,18 @@ class Library extends Component{
     constructor(props){
         super(props);
         this.state = {
-            
+            open : false
         }
     }
+
+
+
     render(){
         const { books } = this.props;
+        console.log(this.state);
         return(
             <div>
+                <h1>The Library is {this.state.open ? "Open" : "Closed"}</h1>
                 {books.map(
                     (book,i) => <Book
                         key={i}
