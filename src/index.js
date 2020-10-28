@@ -1,17 +1,51 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { Component} from "react"
+import { render } from "react-dom"
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+let skiData = {
+    total: 10,
+    powder: 5,
+    backCountry: 2,
+    goal: 100
+}
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+class SkiDataCounter extends Component{
+    getPercent = decimal => {
+        return decimal * 100 + '%'
+    }
+    calcGoalProgress = (total,goal) => {
+        return this.getPercent(total/goal)
+    }
+    render(){
+        // De-structuring to make the code more readable
+        const {total,powder,backCountry,goal} = this.props
+        return(
+            <section>
+                <div>
+                    <p>Total days: {total}</p>
+                </div>
+                <div>
+                    <p>Powder days: {powder}</p>
+                </div>
+                <div>
+                    <p>Back Country days: {backCountry}</p>
+                </div>
+                <div>
+                    <p>Goals: {goal}</p>
+                </div><div>
+                    <p>Goals progress: {this.calcGoalProgress(total,goal)}</p>
+                </div>
+
+            </section>
+        )
+    }
+}
+
+render(
+    <SkiDataCounter
+        total={skiData.total}
+        powder={skiData.powder}
+        backCountry={skiData.backCountry}
+        goal={skiData.goal}
+    />,
+    document.getElementById("root")
+)
