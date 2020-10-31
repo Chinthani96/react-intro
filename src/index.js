@@ -1,13 +1,13 @@
-import React, { Component} from "react"
-import { render } from "react-dom"
+import React, {Component} from "react"
+import {render} from "react-dom"
 
 const bookList = [
-    {"title":"Inferno", "author":"Dan Brown", "pages":700},
-    {"title":"Da Vinci Code", "author":"Dan Brown", "pages":600},
-    {"title":"Book 3", "author":"Author 3", "pages":200},
-    {"title":"Harry Potter", "author":"J K Rowling", "pages":300},
-    {"title":"Famous Five", "author":"Enid Blyton", "pages":1000},
-    {"title":"Sherlock Holmes", "author":"Author Conon Doyle", "pages":30}
+    {"title": "Inferno", "author": "Dan Brown", "pages": 700},
+    {"title": "Da Vinci Code", "author": "Dan Brown", "pages": 600},
+    {"title": "Book 3", "author": "Author 3", "pages": 200},
+    {"title": "Harry Potter", "author": "J K Rowling", "pages": 300},
+    {"title": "Famous Five", "author": "Enid Blyton", "pages": 1000},
+    {"title": "Sherlock Holmes", "author": "Author Conon Doyle", "pages": 30}
 ]
 
 const Hiring = () =>
@@ -20,8 +20,8 @@ const NotHiring = () =>
         <p>Library is not hiring!</p>
     </div>
 
-const Book = ({title,author,pages,freeBookmark}) => {
-    return(
+const Book = ({title, author, pages, freeBookmark}) => {
+    return (
         <section>
             <h2>{title}</h2>
             <h5>{author}</h5>
@@ -31,34 +31,56 @@ const Book = ({title,author,pages,freeBookmark}) => {
     )
 }
 
-class Library extends Component{
+class Library extends Component {
     state = {
-        open : true,
+        open: true,
         freeBookmark: false,
-        hiring: false
+        hiring: false,
+        data: [],
+        loading: false
     }
+
     componentDidMount() {
-        console.log("Component is mounted!");
+        this.setState({loading: true})
+        fetch('https://hplussport.com/api/products/order/price/sort/asc/qty/1')
+            .then(data => data.json())
+            .then(data => this.setState({data, loading: false}))
     }
+
     componentDidUpdate() {
         console.log("Component updated!");
     }
 
-    toggleOpenClosed = ()=>{
-        this.setState(prevState=> ({
+    toggleOpenClosed = () => {
+        this.setState(prevState => ({
             open: !prevState.open
         }))
     }
-    render(){
-        const { books } = this.props;
+
+    render() {
+        const {books} = this.props;
         // console.log(this.state);
-        return(
+        return (
             <div>
-                {this.state.hiring? <Hiring /> : <NotHiring />}
+                {this.state.hiring ? <Hiring/> : <NotHiring/>}
+                {this.state.loading
+                    ? "loading..."
+                    : <div>
+                        {this.state.data.map(product => {
+                            return(
+                                <div>
+                                    <h4>The product of the week!</h4>
+                                    <h5>{product.name}</h5>
+                                    <img src={product.image} height={100} />
+                                </div>
+                            )
+                        })}
+                    </div>
+                }
                 <h1>The Library is {this.state.open ? "Open" : "Closed"}</h1>
                 <button onClick={this.toggleOpenClosed}>Change</button>
                 {books.map(
-                    (book,i) => <Book
+                    (book, i) => <Book
                         key={i}
                         title={book.title}
                         author={book.author}
@@ -71,6 +93,7 @@ class Library extends Component{
     }
 
 }
+
 render(
     <Library books={bookList}/>,
     document.getElementById("root")
