@@ -68,10 +68,10 @@ class Library extends Component {
                     : <div>
                         {this.state.data.map(product => {
                             return(
-                                <div>
+                                <div key={product.id}>
                                     <h4>The product of the week!</h4>
                                     <h5>{product.name}</h5>
-                                    <img src={product.image} height={100} />
+                                    <img alt={product.name} src={product.image} height={100} />
                                 </div>
                             )
                         })}
