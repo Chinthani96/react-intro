@@ -10,20 +10,40 @@ const bookList = [
     {"title":"Sherlock Holmes", "author":"Author Conon Doyle", "pages":30}
 ]
 
-const Book = ({title,author,pages}) => {
+const Hiring = () =>
+    <div>
+        <p>Library is hiring!</p>
+    </div>
+
+const NotHiring = () =>
+    <div>
+        <p>Library is not hiring!</p>
+    </div>
+
+const Book = ({title,author,pages,freeBookmark}) => {
     return(
         <section>
             <h2>{title}</h2>
             <h5>{author}</h5>
             <p>{pages} pages</p>
+            <p>Free bookmark today : {freeBookmark ? 'Yes!' : 'No!'}</p>
         </section>
     )
 }
 
 class Library extends Component{
     state = {
-        open : true
+        open : true,
+        freeBookmark: false,
+        hiring: false
     }
+    componentDidMount() {
+        console.log("Component is mounted!");
+    }
+    componentDidUpdate() {
+        console.log("Component updated!");
+    }
+
     toggleOpenClosed = ()=>{
         this.setState(prevState=> ({
             open: !prevState.open
@@ -31,9 +51,10 @@ class Library extends Component{
     }
     render(){
         const { books } = this.props;
-        console.log(this.state);
+        // console.log(this.state);
         return(
             <div>
+                {this.state.hiring? <Hiring /> : <NotHiring />}
                 <h1>The Library is {this.state.open ? "Open" : "Closed"}</h1>
                 <button onClick={this.toggleOpenClosed}>Change</button>
                 {books.map(
@@ -41,7 +62,9 @@ class Library extends Component{
                         key={i}
                         title={book.title}
                         author={book.author}
-                        pages={book.pages}/>
+                        pages={book.pages}
+                        freeBookmark={this.state.freeBookmark}
+                    />
                 )}
             </div>
         )
