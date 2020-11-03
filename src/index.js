@@ -15,6 +15,7 @@ class ColorPicker extends Component{
 
     render(){
         return(
+            //const a = 5;
             <form onSubmit={this.submit}>
                 <label>Favorite color: </label>
                 <input type="color" onChange={this.newColor}/>
